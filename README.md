@@ -14,7 +14,7 @@ cd {projectdir}
 mvn springboot:run
 ```
 
-project should run at localhost at port 8080 by default. A dummy data will be injected. You can find dummy data sql in **/src/resources/data.sql**
+project should run at localhost at port 8080 by default. A dummy data will be injected. You can find dummy data sql in **/src/main/resources/data.sql**
 
 ## Project Use Case
 
@@ -37,7 +37,7 @@ Below is the project structure :
 * **DTO**           : model for request, web response , etc.
 * **Exception**     : exception in program.
 
-All UI (HTML) Code and Alpine stored in **/src/resources/templates**
+All UI (HTML) Code and Alpine stored in **/src/main/resources/templates**
 
 ## Database
 
