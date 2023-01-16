@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>View Product</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+
+	<div th:insert="navbar :: navbar"></div>
+
+	<section class="container my-5">
+		<div class="box">
+			<form th:action="@{/product/update/save}" th:object="${updateProductRequest}" method="POST">
+				
+				<input class="input is-invisible" type="text" th:field="${updateProductRequest.productId}" >
+				
+				<div class="field">
+					<label class="label">Product Name</label>
+					<div class="control">
+						<input class="input" type="text" th:field="${updateProductRequest.productName}" >
+					</div>
+				</div>
+				
+				<div class="field">
+					<label class="label">Product Description</label>
+					<div class="control">
+						<textarea class="textarea" th:field="${updateProductRequest.productDescription}" ></textarea>
+					</div>
+				</div>
+				
+				<div class="field">
+					<label class="label">Category</label>
+					<div class="control">
+						<input class="input" type="text"  th:field="${updateProductRequest.categoryName}" readonly>
+						<p class="help is-info">Category can't be changed</p>
+						<input class="input is-invisible" type="text" th:field="${updateProductRequest.categoryId}">
+					</div>	
+				</div>
+				
+				<div class="field">
+					<div class="control">
+						<button class="button is-primary" type="submit"><i class="fa fa-clone mr-2"></i>Save</button>
+						<a th:href="@{/product?page=1}" class="button is-dark"><i class="fa fa-angle-double-left mr-2"></i>Back</a>
+					</div>
+				</div>
+				
+			</form>
+		</div>
+	</section>
+</body>
+</html>

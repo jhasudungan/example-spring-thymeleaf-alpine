@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>List Of Category</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+
+	<div th:insert="navbar :: navbar">  </div>
+	
+	<section class="container my-5">
+		<div class="columns is-6-desktop is-centered">
+			<div class="column is-6 is-centered">
+				<div class="columns">
+					<div class="column">
+						<div class="box">
+							<form th:action="@{/category/search}" th:object="${newSearchCategoryByNameRequest}" method="POST">
+								<input class="input is-primary ml-2" type="text"  th:field="${newSearchCategoryByNameRequest.categoryName}" placeholder="Search Category">
+								<div class="butttons my-3">
+									<button class="button is-primary mr-5" type="submit"><i class="fa fa-search mr-3"></i> Search</button>
+									<a class="button is-link" th:href="@{/category/create}"><i class="fa fa-plus mr-3"></i> Create New Category</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="columns">
+					<div class="column">
+						<div class="card my-3" th:each="category : ${categories}">
+							<div class="card-content">
+								<p class="is-size-5	" th:text="${category.categoryName}"></p>
+								<div class="block"></div>
+								<a th:href="@{/category/{id}(id=${category.categoryId})}" class="button is-info is-small"><i class="fa fa-mail-forward mr-2"></i> View</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			 	<div class="columns">
+			 		<div class="column">
+			 			<a th:href="@{/category?page=1}" class="button is-dark"><i class="fa fa-angle-double-left mr-2"></i> Exit Search Mode</a>
+			 		</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+	xmlns:x-on="https://alpinejs.dev"
+	xmlns:x-bind="https://alpinejs.dev">
+<head>
+<meta charset="ISO-8859-1">
+<title>Create New Category</title>
+
+<!-- Bulma CSS	-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Alpine JS -->
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body x-data="{
+		isModalSearchCategoryOpen : false,
+		categoryName : '',
+		categoryId	: '',
+	}">
+
+	<div th:insert="navbar :: navbar">  </div>
+
+	<section class="container my-5">
+		<div class="box">
+			<form th:action="@{/product/create/save}" th:object="${request}" method="POST">
+				
+				<div class="field">
+					<label class="label">Product Name</label>
+					<div class="control">
+						<input class="input" type="text" th:field="${request.productName}" name="product-name" placeholder="Please Input Product Name">
+					</div>
+				</div>
+				
+				<div class="field">
+					<label class="label">Product Description</label>
+					<div class="control">
+						<textarea class="textarea" th:field="${request.productDescription}" name="product-description"></textarea>
+					</div>
+				</div>
+				
+				<div class="field">
+					<label class="label">Category</label>
+					<div class="columns">
+						<div class="column is-four-fifths">
+							<div class="control">
+								<input class="input" type="text" name="category-name" placeholder="" x-model="categoryName" disabled>
+								<input class="input is-invisible" type="text" th:field="${request.categoryId}" x-model="categoryId" name="category-name" placeholder="">
+							</div>
+						</div>
+						<div class="column">
+							<button class="button is-info is-fullwidth" type="button" x-on:click="isModalSearchCategoryOpen = !isModalSearchCategoryOpen"><i class="fa fa-search mr-2"></i> Search Category</button>
+						</div>
+					</div>
+				</div>
+				
+				<div class="field">
+					<div class="control">
+						<button class="button is-primary" type="submit"><i class="fa fa-clone mr-2"></i>Save</button>
+						<a th:href="@{/product?page=1}" class="button is-dark"><i class="fa fa-angle-double-left mr-2"></i>Back</a>
+					</div>
+				</div>
+				
+			</form>
+		</div>
+	</section>
+
+	<!-- Modal Search Category -->
+	<div class="modal" x-bind:class="isModalSearchCategoryOpen ? 'is-active' : ''" 
+		x-data="{
+			queryCategoryName : '',
+			categoriesData : [],
+			loadingCategoryData : false,
+			
+			handleCloseBtn() {
+				categoriesData = [],
+				queryCategoryName = ''
+				isModalSearchCategoryOpen = false
+			},
+			
+			handleChooseCategory(category) {
+				categoryName = category.categoryName,
+				categoryId	= category.categoryId,
+				
+				categoriesData = [],
+				queryCategoryName = ''
+				isModalSearchCategoryOpen = false
+			},
+			
+			fetchCategory() {
+			
+				this.loadingCategoryData = true;
+				this.queryCategoryName = this.queryCategoryName.toLowerCase();
+				
+				let url = `/api/v1/category/search?name=${this.queryCategoryName}`;
+				
+				fetch(url)
+                	.then(res => res.json())
+                	.then(data => {
+                    	this.categoriesData = data.payload.category
+                	});
+            
+            	this.loadingCategoryData = false;
+				
+			}
+		}">
+		<div class="modal-background"></div>
+		<div class="modal-card">
+			<header class="modal-card-head">
+	            <p class="modal-card-title">Search Category</p>
+	            <button class="delete" aria-label="close" x-on:click="handleCloseBtn()"></button>
+          	</header>
+          	<section class="modal-card-body">
+          		<div>
+          			<label class="label">Search</label>
+          			<div class="control">
+                    	<input class="input" x-model="queryCategoryName" type="text" name="search-country" placeholder="Search Country">
+                	</div>
+                	<div class="control my-5">
+                		<button class="button is-info" x-on:click="fetchCategory()"><i class="fa fa-search mr-2"></i> Search</button>
+                	</div>
+                	<template x-if="categoriesData.length > 0 && !loadingCategoryData" class="table">
+	                    <template x-for="category in categoriesData">
+	                        <div class="card my-2">
+	                            <div class="card-content">
+	                                <div class="media">
+	                                    <div class="media-content">
+	                                      <p class="is-4" x-text="category.categoryName"></p>
+										  <div class="block"></div>
+	                                      <span><button class="button is-small is-primary" x-on:click="handleChooseCategory(category)"><i class="fa fa-plus mr-2"></i> Choose</button></span>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </template>
+                	</template>
+          		</div>
+          	</section>
+		</div>
+	</div>
+
+</body>
+</html>
