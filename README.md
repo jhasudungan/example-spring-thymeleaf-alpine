@@ -4,10 +4,9 @@ This is an example of Springboot using Thymeleaf+AlpineJs for it's UI side. I cr
 
 ## Run Local
 
-_____________________________________________________________________________________________________
 To run this project on your local :
 
-```
+```bash
 git pull {githubtothisproject}
 
 cd {projectdir}
@@ -15,24 +14,18 @@ cd {projectdir}
 mvn springboot:run
 ```
 
-project should run at localhost at port 8080 by default.
+project should run at localhost at port 8080 by default. A dummy data will be injected. You can find dummy data sql in **/src/resources/data.sql**
 
 ## Project Use Case
-
-_____________________________________________________________________________________________________
 
 A very simple use case was created for this project. There are two entity, **category** and **product**, with One-To-Many relationship between it. Category is the parent and product is the child.
 
 ## Project Utilty
 
-_____________________________________________________________________________________________________
-
 * CRUD-Search Category
 * CRUD-Search Product
 
 ## Project Structure
-
-_____________________________________________________________________________________________________
 
 Below is the project structure :
 
@@ -44,13 +37,13 @@ Below is the project structure :
 * **DTO**           : model for request, web response , etc.
 * **Exception**     : exception in program.
 
-## Database
+All UI (HTML) Code and Alpine stored in **/src/resources/templates**
 
-_____________________________________________________________________________________________________
+## Database
 
 This project already embedded H2 Database, so created data will lost upon restart.  You can change the DB configuration in application.properties :
 
-```
+```bash
 # H2 Database Config
 spring.datasource.url=jdbc:h2:mem:testdb
 spring.datasource.driverClassName=org.h2.Driver
