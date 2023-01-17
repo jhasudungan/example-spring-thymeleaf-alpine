@@ -1,4 +1,4 @@
-package dev.jeremidigitallab.learn;
+package dev.jeremidigitallab.examplespringthymeleafalpine;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
