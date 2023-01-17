@@ -8,7 +8,7 @@
 		<version>2.7.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>dev.jeremidigitallab.learn</groupId>
+	<groupId>dev.jeremidigitallab</groupId>
 	<artifactId>example-spring-thymeleaf-alpine</artifactId>
 	<version>0.0.1</version>
 	<name>example-spring-thymeleaf-alpine</name>
